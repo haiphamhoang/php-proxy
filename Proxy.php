@@ -234,10 +234,10 @@ class Proxy
     {
         if (!empty(static::$TARGET_URL)) {
             $targetURL = static::$TARGET_URL;
-        } elseif {
-            $targetURL = static::ri($_SERVER[static::$HEADER_HTTP_PROXY_TARGET_URL]);
+        } elseif (!empty($_GET['h-target'])) {
+            $targetURL = static::ri($_GET['h-target']);
         } else {
-            $targetURL = trim($_GET['h-target']);
+            $targetURL = static::ri($_SERVER[static::$HEADER_HTTP_PROXY_TARGET_URL]);
         }
 
         if (empty($targetURL)) {
@@ -265,7 +265,7 @@ class Proxy
     protected static function isAuthenticated()
     {
         
-        return !static::$ENABLE_AUTH || static::ri($_SERVER[static::$HEADER_HTTP_PROXY_AUTH]) === static::$AUTH_KEY || $_GET['h-auth'] === static::$AUTH_KEY;
+        return !static::$ENABLE_AUTH || static::ri($_SERVER[static::$HEADER_HTTP_PROXY_AUTH]) === static::$AUTH_KEY ||  static::ri($_GET['h-auth']) === static::$AUTH_KEY;
     }
 
     /**

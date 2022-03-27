@@ -349,6 +349,7 @@ class Proxy
     public static function run()
     {
         if (!static::isAuthenticated()) {
+            exit();
             throw new RuntimeException(static::$HEADER_HTTP_PROXY_AUTH . ' header is invalid');
         }
 
